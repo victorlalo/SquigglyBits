@@ -109,6 +109,7 @@ export function resolveAbsorptions(
     if (!absorber || !prey) continue
     if (absorbedIds.has(absorber.id) || absorbedIds.has(prey.id)) continue
     if (absorber.size < prey.size * ABSORPTION_MIN_RATIO) continue
+    if (prey.age < 5) continue  // newborn immunity — prevents instant re-absorption after reproduction
 
     // Energy transfer
     absorber.energy = Math.min(CREATURE_MAX_ENERGY, absorber.energy + prey.energy * ABSORPTION_ENERGY_GAIN)
@@ -176,8 +177,8 @@ export function reproduce(
     const angle = rng() * Math.PI * 2
     offspring.push({
       id: nextId.value++,
-      x: c.x + Math.cos(angle) * c.size * 1.5,
-      y: c.y + Math.sin(angle) * c.size * 1.5,
+      x: c.x + Math.cos(angle) * c.size * 3,
+      y: c.y + Math.sin(angle) * c.size * 3,
       vx: Math.cos(angle + Math.PI), // opposite direction from parent
       vy: Math.sin(angle + Math.PI),
       speed: Math.max(0.5, mutate(c.speed)),
