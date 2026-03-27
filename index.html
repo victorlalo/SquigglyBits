@@ -6,21 +6,173 @@
     <title>SquigglyBits</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { background: #111; display: flex; height: 100vh; overflow: hidden; font-family: sans-serif; }
-      #game-container { flex: 1; display: flex; align-items: center; justify-content: center; }
-      #sidebar { width: 260px; background: #1a1a1a; padding: 20px; color: #eee; border-left: 1px solid #333; }
-      #sidebar h1 { font-size: 1.2rem; margin-bottom: 8px; color: #fff; }
-      #sidebar p { font-size: 0.85rem; color: #888; }
+
+      body {
+        background: #111;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        font-family: sans-serif;
+        color: #eee;
+      }
+
+      /* ── Game canvas area ── */
+      #game-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      /* ── Sidebar ── */
+      #sidebar {
+        width: 240px;
+        background: #1a1a1a;
+        padding: 20px;
+        border-left: 1px solid #2a2a2a;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        overflow-y: auto;
+      }
+
+      #sidebar h1 {
+        font-size: 1.1rem;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+
+      #sidebar p {
+        font-size: 0.82rem;
+        color: #888;
+        margin-top: 6px;
+        line-height: 1.4;
+      }
+
+      #sidebar p.tagline {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+
+      /* ── Sliders ── */
+      #sidebar label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        color: #aaa;
+        margin-top: 18px;
+      }
+
+      #sidebar label span {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      #sidebar input[type="range"] {
+        width: 100%;
+        margin-top: 6px;
+        accent-color: #3a7bd5;
+      }
+
+      /* ── Buttons ── */
+      #sidebar button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: bold;
+        transition: background 0.15s;
+      }
+
+      #sidebar button:not(.secondary) {
+        background: #3a7bd5;
+        color: #fff;
+      }
+      #sidebar button:not(.secondary):hover { background: #4a8be5; }
+
+      #sidebar button.secondary {
+        background: #2a2a2a;
+        color: #aaa;
+        margin-top: 8px;
+      }
+      #sidebar button.secondary:hover { background: #333; color: #eee; }
+
+      /* ── Stats panel (select phase) ── */
+      .stats {
+        margin-top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+      .stats p {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        color: #888;
+        padding: 5px 0;
+        border-bottom: 1px solid #222;
+        margin-top: 0;
+      }
+      .stats p b { color: #eee; font-weight: normal; }
+
+      /* ── Select overlay ── */
+      #select-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 28px;
+        background: rgba(8, 8, 8, 0.88);
+        overflow-y: auto;
+      }
+
+      .creature-dot {
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.12s, transform 0.12s;
+        flex-shrink: 0;
+      }
+      .creature-dot:hover    { transform: scale(1.15); }
+      .creature-dot.selected { border-color: #fff; transform: scale(1.15); }
+
+      /* ── Hover tooltip ── */
+      #creature-tooltip {
+        position: fixed;
+        pointer-events: none;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 0.78rem;
+        color: #eee;
+        min-width: 150px;
+        z-index: 100;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      }
+      .tt-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 3px 0;
+        border-bottom: 1px solid #252525;
+      }
+      .tt-row:last-child { border-bottom: none; }
+      .tt-row span { color: #888; }
+      .tt-row b { font-weight: normal; color: #eee; }
     </style>
   </head>
   <body>
     <div id="game-container"></div>
-    <div id="sidebar">
-      <h1>SquigglyBits</h1>
-      <p id="status">Loading...</p>
-      <p id="tick">Tick: 0</p>
-      <p id="creature-count">Creatures: 0</p>
-    </div>
+    <div id="sidebar"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
