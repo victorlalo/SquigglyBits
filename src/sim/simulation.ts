@@ -1,7 +1,9 @@
 import type { Creature, SimConfig, SimState } from '../types'
+import { FEATURE_IDS } from '../creatureFeatures'
+import { createRandomVisualGenome } from '../spriteGen'
 import { SpatialHash } from './spatialHash'
 import { physicsStep } from './physics'
-import { buildCreatureAIHash, updateSteering, resolveAbsorptions, eatFood, reproduce } from './creature'
+import { applyFeatureAuras, applyCollisionFeatureEffects, buildCreatureAIHash, updateSteering, resolveAbsorptions, eatFood, reproduce } from './creature'
 import { spawnFood } from './food'
 import { createRNG } from '../rng'
 import {
@@ -42,6 +44,9 @@ export function initSimulation(config: SimConfig, seed: number, spriteKeys: stri
       spriteKey: spriteKeys.length > 0
         ? spriteKeys[Math.floor(rng() * spriteKeys.length)]
         : 'default',
+      featureId: FEATURE_IDS[Math.floor(rng() * FEATURE_IDS.length)],
+      visual: createRandomVisualGenome(rng),
+      speedBurst: 1,
       absorptions: 0,
       children: 0,
     })
@@ -76,30 +81,36 @@ export function stepSimulation(state: SimState): void {
   // 4. AI steering (updates velocity + drains energy + increments age)
   updateSteering(creatures, food, foodHash, creatureHash, config, rng)
 
+  // 4.5 Passive feature effects like poison auras.
+  applyFeatureAuras(creatures, creatureHash)
+
   // 5. Physics: move + boundary + detect collisions
   const collisions = physicsStep(creatures, config.speedModifier)
 
-  // 6. Resolve absorptions
+  // 6. Contact-based feature effects like spikes and chaotic collisions.
+  applyCollisionFeatureEffects(creatures, collisions, rng)
+
+  // 7. Resolve absorptions
   const absorbedIds = resolveAbsorptions(creatures, collisions, config, rng)
 
-  // 7. Eat food
+  // 8. Eat food
   const eatenIndices = eatFood(creatures, food, foodHash)
 
-  // 8. Reproduce
+  // 9. Reproduce
   const offspring = reproduce(creatures, config, rng, nextId)
   state.nextCreatureId = nextId.value
 
-  // 9. Remove absorbed + dead creatures (iterate backwards to preserve indices)
+  // 10. Remove absorbed + dead creatures (iterate backwards to preserve indices)
   for (let i = creatures.length - 1; i >= 0; i--) {
     if (absorbedIds.has(creatures[i].id) || creatures[i].energy <= 0) {
       creatures.splice(i, 1)
     }
   }
 
-  // 10. Add offspring after removals
+  // 11. Add offspring after removals
   creatures.push(...offspring)
 
-  // 11. Remove eaten food in-place
+  // 12. Remove eaten food in-place
   let writeIdx = 0
   for (let i = 0; i < food.length; i++) {
     if (!eatenIndices.has(i)) food[writeIdx++] = food[i]

@@ -1,4 +1,5 @@
 import type { Creature } from '../types'
+import { getFeatureDefinition } from '../creatureFeatures'
 import { SpatialHash } from './spatialHash'
 import { JAR_CENTER_X, JAR_CENTER_Y, JAR_RADIUS } from '../config'
 
@@ -13,8 +14,10 @@ const collisionHash = new SpatialHash(64)
 export function physicsStep(creatures: Creature[], speedModifier: number): CollisionPair[] {
   // 1. Integrate positions and enforce jar boundary
   for (const c of creatures) {
-    c.x += c.vx * c.speed * speedModifier
-    c.y += c.vy * c.speed * speedModifier
+    const feature = getFeatureDefinition(c.featureId).gameplay
+    const movementSpeed = c.speed * feature.speedMultiplier * c.speedBurst
+    c.x += c.vx * movementSpeed * speedModifier
+    c.y += c.vy * movementSpeed * speedModifier
 
     const dx = c.x - JAR_CENTER_X
     const dy = c.y - JAR_CENTER_Y

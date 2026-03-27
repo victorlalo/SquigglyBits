@@ -6,7 +6,7 @@ export const JAR_CENTER_Y = 300
 // Simulation timing
 export const MAX_TICKS = 1500
 export const TWEAK_TICKS: ReadonlySet<number> = new Set([500, 1000])
-export const STEPS_PER_FRAME = 2   // simulation ticks per rendered frame (increase to speed up)
+export const STEPS_PER_FRAME = 1   // simulation ticks per rendered frame (increase to speed up)
 
 // Starting population
 export const STARTING_CREATURE_COUNT = 80
@@ -15,10 +15,10 @@ export const CREATURE_CAP = 2000
 // Creature starting ranges
 export const CREATURE_SIZE_MIN = 8
 export const CREATURE_SIZE_MAX = 16
-export const CREATURE_SIZE_CAP = 64   // hard max radius — prevents runaway growth
-export const CREATURE_SPEED_MIN = 1.5
-export const CREATURE_SPEED_MAX = 3.0
-export const CREATURE_START_ENERGY = 80
+export const CREATURE_SIZE_CAP = 32   // hard max radius — prevents runaway growth
+export const CREATURE_SPEED_MIN = 0.6
+export const CREATURE_SPEED_MAX = 1.4
+export const CREATURE_START_ENERGY = 120
 export const CREATURE_MAX_ENERGY = 200
 export const CREATURE_PERCEPTION_BASE = 80
 
@@ -33,16 +33,19 @@ export const REPRODUCTION_MUTATION = 0.12    // base stat variance on split
 
 // Food
 export const FOOD_ENERGY = 25
-export const FOOD_SPAWN_RATE = 0.3           // food items per tick at abundance=5
+export const FOOD_SPAWN_RATE = 0.15           // food items per tick at abundance=5
 
 // Absorption
 export const ABSORPTION_MIN_RATIO = 1.08    // absorber must be this much larger
 export const ABSORPTION_ENERGY_GAIN = 0.70  // fraction of prey energy absorbed
-export const ABSORPTION_MASS_GAIN = 0.20    // fraction of prey mass added to absorber
-export const ABSORPTION_HUE_BLEND = 0.15    // hue shift toward prey on absorption
-export const ABSORPTION_TRAIT_BLEND = 0.20  // trait shift toward prey on absorption
+export const ABSORPTION_MASS_GAIN = 0.35    // fraction of prey mass added to absorber
+export const ABSORPTION_HUE_BLEND = 0.40    // hue shift toward prey on absorption
+export const ABSORPTION_TRAIT_BLEND = 0.3  // trait shift toward prey on absorption
 
 // AI steering
 export const WANDER_STRENGTH = 0.15
 export const STEER_STRENGTH = 0.28
 export const FLEE_STRENGTH = 0.35
+export const TRAJECTORY_SMOOTHING = 0.075
+export const TRAJECTORY_SMOOTHING_MIN = 0.03
+export const TRAJECTORY_SMOOTHING_MAX = 0.15
