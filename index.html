@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SquigglyBits</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #111; display: flex; height: 100vh; overflow: hidden; font-family: sans-serif; }
+      #game-container { flex: 1; display: flex; align-items: center; justify-content: center; }
+      #sidebar { width: 260px; background: #1a1a1a; padding: 20px; color: #eee; border-left: 1px solid #333; }
+      #sidebar h1 { font-size: 1.2rem; margin-bottom: 8px; color: #fff; }
+      #sidebar p { font-size: 0.85rem; color: #888; }
+    </style>
+  </head>
+  <body>
+    <div id="game-container"></div>
+    <div id="sidebar">
+      <h1>SquigglyBits</h1>
+      <p>Scaffolding test — PixiJS running.</p>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
