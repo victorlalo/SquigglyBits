@@ -3,7 +3,7 @@ import type { RNG } from '../rng'
 import type { CollisionPair } from './physics'
 import { SpatialHash } from './spatialHash'
 import {
-  CREATURE_CAP, CREATURE_MAX_ENERGY, CREATURE_SIZE_MIN,
+  CREATURE_CAP, CREATURE_MAX_ENERGY, CREATURE_SIZE_MIN, CREATURE_SIZE_CAP,
   ENERGY_DRAIN_BASE, ENERGY_DRAIN_PER_SIZE, ENERGY_DRAIN_PER_SPEED,
   REPRODUCTION_THRESHOLD, REPRODUCTION_MUTATION,
   ABSORPTION_MIN_RATIO, ABSORPTION_ENERGY_GAIN, ABSORPTION_MASS_GAIN,
@@ -113,9 +113,9 @@ export function resolveAbsorptions(
     // Energy transfer
     absorber.energy = Math.min(CREATURE_MAX_ENERGY, absorber.energy + prey.energy * ABSORPTION_ENERGY_GAIN)
 
-    // Size growth (area-based, partial mass absorption)
+    // Size growth (area-based, partial mass absorption, hard cap)
     const massGain = prey.size * prey.size * ABSORPTION_MASS_GAIN
-    absorber.size = Math.sqrt(absorber.size * absorber.size + massGain)
+    absorber.size = Math.min(CREATURE_SIZE_CAP, Math.sqrt(absorber.size * absorber.size + massGain))
 
     // Trait blending — mutationRate amplifies variance
     const blendVariance = 1 + (rng() - 0.5) * config.mutationRate
