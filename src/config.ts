@@ -6,6 +6,7 @@ export const JAR_CENTER_Y = 300
 // Simulation timing
 export const MAX_TICKS = 1500
 export const TWEAK_TICKS: ReadonlySet<number> = new Set([500, 1000])
+export const STEPS_PER_FRAME = 2   // simulation ticks per rendered frame (increase to speed up)
 
 // Starting population
 export const STARTING_CREATURE_COUNT = 80
@@ -36,7 +37,7 @@ export const FOOD_SPAWN_RATE = 0.3           // food items per tick at abundance
 // Absorption
 export const ABSORPTION_MIN_RATIO = 1.08    // absorber must be this much larger
 export const ABSORPTION_ENERGY_GAIN = 0.70  // fraction of prey energy absorbed
-export const ABSORPTION_MASS_GAIN = 0.35    // fraction of prey mass added to absorber
+export const ABSORPTION_MASS_GAIN = 0.25    // fraction of prey mass added to absorber
 export const ABSORPTION_HUE_BLEND = 0.15    // hue shift toward prey on absorption
 export const ABSORPTION_TRAIT_BLEND = 0.20  // trait shift toward prey on absorption
 

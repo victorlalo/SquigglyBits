@@ -3,7 +3,7 @@ import { initSimulation, stepSimulation } from './sim/simulation'
 import { getSpriteManifest } from './assets'
 import { randomSeed } from './rng'
 import { hslToHex } from './utils'
-import { JAR_CENTER_X, JAR_CENTER_Y, JAR_RADIUS, MAX_TICKS } from './config'
+import { JAR_CENTER_X, JAR_CENTER_Y, JAR_RADIUS, MAX_TICKS, STEPS_PER_FRAME } from './config'
 import type { SimConfig } from './types'
 
 const DEFAULT_CONFIG: SimConfig = {
@@ -36,7 +36,10 @@ async function init() {
 
   app.ticker.add(() => {
     if (state.phase === 'running') {
-      stepSimulation(state)
+      for (let i = 0; i < STEPS_PER_FRAME; i++) {
+        stepSimulation(state)
+        if (state.phase !== 'running') break
+      }
     }
 
     // --- Draw ---
