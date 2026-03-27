@@ -71,7 +71,8 @@ export function showSelectUI(
         cleanup(); resolve()
       })
       sidebar.querySelector('#run-again-btn')?.addEventListener('click', () => {
-        cleanup(); resolve()
+        cleanup()
+        window.location.reload()
       })
     }
 
@@ -83,7 +84,8 @@ export function showSelectUI(
         <button id="run-again-btn" class="secondary">Run Again</button>
       `
       sidebar.querySelector('#run-again-btn')!.addEventListener('click', () => {
-        cleanup(); resolve()
+        cleanup()
+        window.location.reload()
       })
     }
 

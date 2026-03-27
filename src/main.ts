@@ -36,7 +36,7 @@ async function init() {
   await app.init({
     width: 600,
     height: 600,
-    backgroundColor: 0x0a0a0a,
+    backgroundColor: 0x111111,
     antialias: true,
   })
 
@@ -91,6 +91,7 @@ async function init() {
     // --- Jar border + food (Graphics) ---
     g.clear()
     g.circle(JAR_CENTER_X, JAR_CENTER_Y, JAR_RADIUS)
+    g.fill(0x6a6a6a)
     g.stroke({ color: 0x555555, width: 2 })
     for (const f of state.food) {
       g.circle(f.x, f.y, 3)

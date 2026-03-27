@@ -269,20 +269,7 @@ function drawEyes(ctx: CanvasRenderingContext2D, visual: CreatureVisualGenome, s
   for (const eye of buildEyes(visual, shape)) {
     const cx = SPRITE_SIZE * eye.x
     const cy = SPRITE_SIZE * eye.y
-    const scleraRx = SPRITE_SIZE * 0.145 * eye.scale
-    const scleraRy = SPRITE_SIZE * 0.128 * eye.scale
     const pupilR   = SPRITE_SIZE * 0.065 * eye.scale
-
-    // Sclera
-    ctx.fillStyle = 'rgba(255,255,255,0.99)'
-    ctx.beginPath()
-    ctx.ellipse(cx, cy, scleraRx, scleraRy, 0, 0, Math.PI * 2)
-    ctx.fill()
-
-    // Sclera rim
-    ctx.strokeStyle = 'rgba(40,40,40,0.16)'
-    ctx.lineWidth = 1.2
-    ctx.stroke()
 
     // Pupil
     ctx.fillStyle = '#060606'
@@ -301,13 +288,6 @@ function drawEyes(ctx: CanvasRenderingContext2D, visual: CreatureVisualGenome, s
     ctx.beginPath()
     ctx.arc(cx + pupilR * 0.28, cy + pupilR * 0.30, pupilR * 0.14, 0, Math.PI * 2)
     ctx.fill()
-
-    // Eyelid arch — gives the eye that slightly droopy "pet" look
-    ctx.strokeStyle = 'rgba(25,25,25,0.28)'
-    ctx.lineWidth = Math.max(1.2, eye.scale * 1.6)
-    ctx.beginPath()
-    ctx.arc(cx, cy + scleraRy + SPRITE_SIZE * 0.07, SPRITE_SIZE * 0.048 * eye.scale, 0.14 * Math.PI, 0.86 * Math.PI)
-    ctx.stroke()
   }
 }
 
