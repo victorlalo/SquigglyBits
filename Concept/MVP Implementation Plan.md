@@ -133,19 +133,23 @@ SquigglyBits/
 - **Jar is a circle** — boundary enforcement via distance-from-center check in physics module.
 
 ## Implementation Order
-1. Scaffold project: `npm create vite@latest`, install PixiJS, verify dev server
-2. `rng.ts` — seedable PRNG (mulberry32, ~15 lines)
-3. `types.ts` + `config.ts` — shared types and constants
-4. `spatialHash.ts` — grid-based spatial partitioning (~70 lines)
-5. `physics.ts` — movement integration, boundary, collision detection using spatial hash
-6. `creature.ts` + `food.ts` — behavior logic (absorption, reproduction, energy)
-7. `simulation.ts` — tick orchestrator, wire physics + creature logic
-8. `renderer.ts` — PixiJS setup, ParticleContainer for creatures/food, jar Graphics
-9. `setupUI.ts` — sliders + start button (HTML)
-10. `simUI.ts` — game loop (PixiJS ticker), mid-sim tweak pause logic
-11. `main.ts` — phase state machine wiring everything together
-12. `selectUI.ts` — survivor display, click-to-select, stats card
-13. Polish — tune constants, stress-test at high creature counts, fix edge cases
+
+| # | File | Status |
+|---|------|--------|
+| 1 | Scaffold: Vite + TypeScript + PixiJS | ✅ Done |
+| 2 | `src/rng.ts` | ✅ Done |
+| 3 | `src/types.ts` + `src/config.ts` | ✅ Done |
+| 4 | `src/sim/spatialHash.ts` | ✅ Done |
+| 5 | `src/sim/physics.ts` | ✅ Done |
+| 6 | `src/sim/creature.ts` + `src/sim/food.ts` | ✅ Done |
+| 7 | `src/sim/simulation.ts` | ✅ Done |
+| 8 | `src/assets.ts` + sprite convention | ✅ Done |
+| 9 | `src/ui/renderer.ts` — PixiJS ParticleContainer | ⬜ Next |
+| 10 | `src/ui/setupUI.ts` — sliders + start button | ⬜ Next |
+| 11 | `src/ui/simUI.ts` — game loop + mid-sim pause | ⬜ Next |
+| 12 | `src/main.ts` — phase state machine (rewrite) | ⬜ Next |
+| 13 | `src/ui/selectUI.ts` — select champion + stats card | ⬜ Next |
+| 14 | Polish — tune constants, stress-test at scale | ⬜ Next |
 
 ## Verification
 - Run `npm run dev`, open browser
