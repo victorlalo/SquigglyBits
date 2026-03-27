@@ -1,5 +1,27 @@
 import type { RNG } from './rng'
 
+export type CreatureFeatureId =
+  | 'spikes'
+  | 'shell'
+  | 'fins'
+  | 'poisonSac'
+  | 'thrusters'
+  | 'tentacles'
+  | 'denseCore'
+  | 'frills'
+
+export type CreatureBodyArchetype = 'round' | 'pear' | 'elongated' | 'tadpole'
+
+export interface CreatureVisualGenome {
+  bodyArchetype: CreatureBodyArchetype
+  shapeSeed: number
+  eyeSeed: number
+  eyeOffsetX: number
+  eyeOffsetY: number
+  eyeScale: number
+  accentHueOffset: number
+}
+
 export interface Creature {
   id: number
   x: number
@@ -15,6 +37,9 @@ export interface Creature {
   generation: number
   hue: number      // 0–360, used for tinting sprites
   spriteKey: string // matches a key from getSpriteManifest(), or 'default'
+  featureId: CreatureFeatureId
+  visual: CreatureVisualGenome
+  speedBurst: number
   absorptions: number
   children: number
 }

@@ -1,4 +1,5 @@
 import type { Creature, SimState } from '../types'
+import { getFeatureDefinition } from '../creatureFeatures'
 
 const LOGICAL_SIZE = 600 // matches app.init width/height
 
@@ -32,6 +33,7 @@ export function enableHoverTooltip(canvas: HTMLCanvasElement, state: SimState): 
       tooltip.style.left = `${tx}px`
       tooltip.style.top  = `${ty}px`
       tooltip.innerHTML = `
+        <div class="tt-row"><span>Feature</span><b>${getFeatureDefinition(found.featureId).label}</b></div>
         <div class="tt-row"><span>Speed</span><b>${found.speed.toFixed(2)}</b></div>
         <div class="tt-row"><span>Size</span><b>${found.size.toFixed(1)}</b></div>
         <div class="tt-row"><span>Perception</span><b>${found.perception.toFixed(1)}</b></div>
